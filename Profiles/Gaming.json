@@ -1,0 +1,8 @@
+{
+  "name": "Gaming",
+  "priority": "AboveNormal",
+  "cpuAffinity": "Auto",
+  "memoryMode": "Aggressive",
+  "latencyMode": true,
+  "description": "Perfil otimizado para jogos - prioridade elevada e baixa latência"
+}

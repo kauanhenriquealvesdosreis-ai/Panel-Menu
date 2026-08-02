@@ -1,0 +1,8 @@
+{
+  "name": "Background",
+  "priority": "BelowNormal",
+  "cpuAffinity": "EfficiencyCores",
+  "memoryMode": "Conservative",
+  "latencyMode": false,
+  "description": "Perfil para processos em segundo plano"
+}

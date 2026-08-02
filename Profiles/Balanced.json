@@ -1,0 +1,8 @@
+{
+  "name": "Balanced",
+  "priority": "Normal",
+  "cpuAffinity": "All",
+  "memoryMode": "Balanced",
+  "latencyMode": false,
+  "description": "Perfil balanceado para uso geral e workstation"
+}

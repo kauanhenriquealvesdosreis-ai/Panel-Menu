@@ -1,0 +1,8 @@
+{
+  "name": "Performance",
+  "priority": "High",
+  "cpuAffinity": "PerformanceCores",
+  "memoryMode": "Aggressive",
+  "latencyMode": true,
+  "description": "Perfil de alta performance para aplicações críticas"
+}
