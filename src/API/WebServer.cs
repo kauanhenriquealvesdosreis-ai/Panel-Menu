@@ -1,12 +1,12 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Hosting;
 using VessieFramework.Core;
-using VessieFramework.Monitors;
+using VessieFramework.Performance;
 using VessieFramework.Models;
 using VessieFramework.Native;
 using VessieFramework.Utils;
 
-namespace VessieFramework;
+namespace VessieFramework.API;
 
 public static class WebServer
 {
