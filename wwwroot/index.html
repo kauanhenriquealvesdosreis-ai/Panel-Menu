@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vessie Framework - Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>⚡ Vessie Framework</h1>
+            <p>Painel de Controle em Tempo Real</p>
+        </header>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-label">CPU Total</div>
+                <div class="stat-value" id="cpu-usage">0%</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Memória Disponível</div>
+                <div class="stat-value" id="memory-available">0 MB</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Processos Otimizados</div>
+                <div class="stat-value" id="tracked-count">0</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Última Atualização</div>
+                <div class="stat-value" id="last-update">--:--:--</div>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <h2>📋 Processos Monitorados</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>PID</th>
+                        <th>Nome</th>
+                        <th>Prioridade</th>
+                        <th>Memória (MB)</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody id="process-table">
+                    <tr>
+                        <td colspan="5" class="loading">Carregando...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <footer>
+            <p>Framework atuando em modo usuário · 100% reversível com rollback automático</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
