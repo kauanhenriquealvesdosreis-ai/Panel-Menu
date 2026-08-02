@@ -5,10 +5,29 @@ using VessieFramework.Native;
 
 namespace VessieFramework.Core;
 
+/// <summary>
+/// Interface para gerenciamento de snapshots e rollback
+/// </summary>
+public interface IRollbackManager
+{
+    void TakeSnapshot(int pid);
+    Task<ProcessSnapshot?> TakeSnapshotAsync(int pid);
+    bool RestoreSnapshot(int pid);
+    Task<bool> RestoreSnapshotAsync(int pid);
+    void RestoreAllAndClear();
+    bool IsTracked(int pid);
+    List<ProcessSnapshot> GetAllSnapshots();
+    void RemoveSnapshot(int pid);
+    Task<int> GetActiveSnapshotsCountAsync();
+}
+
 public static class RollbackManager
 {
     private static readonly ConcurrentDictionary<int, ProcessSnapshot> _snapshots = new();
 
+    /// <summary>
+    /// Cria snapshot do estado atual de um processo
+    /// </summary>
     public static void TakeSnapshot(int pid)
     {
         var handle = NativeMethods.OpenProcess(
@@ -75,4 +94,32 @@ public static class RollbackManager
     public static bool IsTracked(int pid) => _snapshots.ContainsKey(pid);
     public static List<ProcessSnapshot> GetAllSnapshots() => _snapshots.Values.ToList();
     public static void RemoveSnapshot(int pid) => _snapshots.TryRemove(pid, out _);
+    
+    /// <summary>
+    /// Versão assíncrona para criar snapshot
+    /// </summary>
+    public static async Task<ProcessSnapshot?> TakeSnapshotAsync(int pid)
+    {
+        return await Task.Run(() =>
+        {
+            TakeSnapshot(pid);
+            return _snapshots.TryGetValue(pid, out var snapshot) ? snapshot : null;
+        });
+    }
+    
+    /// <summary>
+    /// Versão assíncrona para restaurar snapshot
+    /// </summary>
+    public static async Task<bool> RestoreSnapshotAsync(int pid)
+    {
+        return await Task.Run(() => RestoreSnapshot(pid));
+    }
+    
+    /// <summary>
+    /// Obtém contagem de snapshots ativos de forma assíncrona
+    /// </summary>
+    public static async Task<int> GetActiveSnapshotsCountAsync()
+    {
+        return await Task.Run(() => _snapshots.Count(s => !s.Value.IsRestored));
+    }
 }

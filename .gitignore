@@ -1,30 +1,17 @@
 ```
 # Build artifacts
-build/
+bin/
 obj/
-
-# Compiled files
 *.dll
 *.exe
 *.pdb
-*.deps.json
-*.runtimeconfig.json
-*.AssemblyAttributes.cs
-*.Up2Date
-*.AssemblyInfo.cs
-*.AssemblyInfoInputs.cache
-*.GeneratedMSBuildEditorConfig.editorconfig
-*.GlobalUsings.g.cs
-*.assets.cache
-*.FileListAbsolute.txt
-*.genruntimeconfig.cache
-*.nupkg
-*.nuspec
+*.so
+*.dylib
 
 # Dependencies
 packages/
-bin/
-obj/
+node_modules/
+.nuget/
 
 # Logs
 *.log
@@ -37,8 +24,36 @@ obj/
 # Editors
 .vscode/
 .idea/
+*.swp
+*.swo
 
-# OS generated files
+# OS
 .DS_Store
 Thumbs.db
+
+# Tests and coverage
+coverage/
+htmlcov/
+*.coverage
+.testcoverage
+
+# Distribution
+dist/
+build/
+target/
+
+# Python specific
+__pycache__/
+*.pyc
+*.pyo
+.Python
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Temporary files
+*.tmp
+*~
+.project
+.c9/
+.cache/
 ```

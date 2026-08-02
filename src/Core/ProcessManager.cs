@@ -4,8 +4,29 @@ using VessieFramework.Models;
 
 namespace VessieFramework.Core;
 
+/// <summary>
+/// Gerenciador avançado de processos com suporte multiplataforma
+/// </summary>
+public interface IProcessManager
+{
+    List<ProcessInfo> GetRunningProcesses();
+    bool SetPriority(int pid, uint priorityClass);
+    bool SetAffinity(int pid, IntPtr mask);
+    bool SetWorkingSet(int pid, IntPtr min, IntPtr max);
+    uint GetPriority(int pid);
+    Task<ProcessInfo?> GetProcessInfoAsync(int pid);
+    Task<bool> IsProtectedProcessAsync(int pid);
+}
+
 public static class ProcessManager
 {
+    // Lista de processos protegidos que não podem ser modificados
+    private static readonly HashSet<string> ProtectedProcesses = new(StringComparer.OrdinalIgnoreCase)
+    {
+        "System", "Idle", "csrss", "wininit", "services", "lsass", "lsm",
+        "smss", "winlogon", "registry", "memcompression", "docker", "containerd"
+    };
+    
     public static List<ProcessInfo> GetRunningProcesses()
     {
         var list = new List<ProcessInfo>();
@@ -80,5 +101,63 @@ public static class ProcessManager
         var prio = NativeMethods.GetPriorityClass(handle);
         NativeMethods.CloseHandle(handle);
         return prio;
+    }
+    
+    /// <summary>
+    /// Verifica se o processo é protegido e não deve ser modificado
+    /// </summary>
+    public static bool IsProtectedProcess(int pid)
+    {
+        try
+        {
+            using var process = Process.GetProcessById(pid);
+            return ProtectedProcesses.Contains(process.ProcessName);
+        }
+        catch
+        {
+            return true; // Se não conseguir acessar, considera protegido por segurança
+        }
+    }
+    
+    /// <summary>
+    /// Obtém informações detalhadas de um processo específico
+    /// </summary>
+    public static async Task<ProcessInfo?> GetProcessInfoAsync(int pid)
+    {
+        try
+        {
+            using var process = await Task.Run(() => Process.GetProcessById(pid));
+            var handle = NativeMethods.OpenProcess(
+                NativeMethods.PROCESS_QUERY_INFORMATION,
+                false, pid);
+            
+            if (handle == IntPtr.Zero) return null;
+            
+            var info = new ProcessInfo
+            {
+                Id = pid,
+                Name = process.ProcessName,
+                PriorityClass = NativeMethods.GetPriorityClass(handle),
+                MemoryUsage = process.WorkingSet64 / 1024 / 1024
+            };
+            
+            if (NativeMethods.GetProcessAffinityMask(handle, out IntPtr procMask, out _))
+                info.AffinityMask = procMask;
+            
+            NativeMethods.CloseHandle(handle);
+            return info;
+        }
+        catch
+        {
+            return null;
+        }
+    }
+    
+    /// <summary>
+    /// Versão assíncrona para verificar se processo é protegido
+    /// </summary>
+    public static async Task<bool> IsProtectedProcessAsync(int pid)
+    {
+        return await Task.Run(() => IsProtectedProcess(pid));
     }
 }
