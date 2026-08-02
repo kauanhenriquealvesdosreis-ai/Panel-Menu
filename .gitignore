@@ -1,25 +1,27 @@
 ```
-# Build artifacts
+# Compiled and build artifacts
+*.exe
+*.dll
+*.so
+*.a
+*.obj
+*.out
 bin/
 obj/
-*.dll
-*.exe
-*.pdb
-*.so
-*.dylib
-*.o
-*.obj
+Debug/
+Release/
 
 # Dependencies
 packages/
+lib/
 node_modules/
-venv/
-.venv/
-__pycache__/
-*.egg-info/
+npm-debug.log*
+yarn-error.log*
 
-# Logs
+# Logs and temp files
 *.log
+*.tmp
+*.swp
 
 # Environment
 .env
@@ -29,24 +31,17 @@ __pycache__/
 # Editors
 .vscode/
 .idea/
-*.swp
-*.swo
+*.userprefs
+*.user
 
-# OS
+# OS generated files
 .DS_Store
 Thumbs.db
+desktop.ini
 
-# Testing
-*.test.exe
-*.tests.dll
-
-# Coverage
-coverage/
-htmlcov/
-.coverage
-
-# Distribution
+# Build outputs
 dist/
 build/
 target/
+out/
 ```
