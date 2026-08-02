@@ -1,20 +1,30 @@
 ```
 # Build artifacts
-*.obj
-*.exe
-*.dll
-*.so
-*.a
-*.out
+build/
 obj/
-bin/
-Debug/
-Release/
+
+# Compiled files
+*.dll
+*.exe
+*.pdb
+*.deps.json
+*.runtimeconfig.json
+*.AssemblyAttributes.cs
+*.Up2Date
+*.AssemblyInfo.cs
+*.AssemblyInfoInputs.cache
+*.GeneratedMSBuildEditorConfig.editorconfig
+*.GlobalUsings.g.cs
+*.assets.cache
+*.FileListAbsolute.txt
+*.genruntimeconfig.cache
+*.nupkg
+*.nuspec
 
 # Dependencies
 packages/
-node_modules/
-vendor/
+bin/
+obj/
 
 # Logs
 *.log
@@ -25,42 +35,10 @@ vendor/
 *.env.*
 
 # Editors
-.vs/
 .vscode/
 .idea/
-*.swp
-*.swo
 
-# OS
+# OS generated files
 .DS_Store
 Thumbs.db
-
-# Coverage
-coverage/
-htmlcov/
-*.coverage
-
-# Compression
-*.zip
-*.gz
-*.tar
-*.tgz
-*.bz2
-*.xz
-*.7z
-*.rar
-*.zst
-*.lz4
-*.lzh
-*.cab
-*.arj
-*.rpm
-*.deb
-*.Z
-*.lz
-*.lzo
-*.tar.gz
-*.tar.bz2
-*.tar.xz
-*.tar.zst
 ```
